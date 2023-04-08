@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>about:blank</title>
+
+  <script>
+    const emailBox1 = document.getElementById('emailBox');
+
+    emailBox1.addEventListener('input', function() {
+      if (!this.value && !this.matches(':focus')) {
+        this.classList.remove('has-text');
+      } else {
+        this.classList.add('has-text');
+      }
+    });
+  </script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-analytics.js";
+    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-auth.js";
+    import { getDatabase, ref, update } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js";
+  
+    const firebaseConfig = {
+        apiKey: "AIzaSyCT2bF_qUrXO-CB2m5pN9kSxctDGxQm1VI",
+        authDomain: "freegameslite.firebaseapp.com",
+        projectId: "freegameslite",
+        storageBucket: "freegameslite.appspot.com",
+        messagingSenderId: "29184420072",
+        appId: "1:29184420072:web:08915c693f76bf51ad415d",
+        measurementId: "G-XYGLW5EJNM"
+    };
+    
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+  
+    const loginForm = document.querySelector('.login form');
+    const emailBox = document.querySelector('#emailBox');
+    const passwordBox = document.querySelector('#passwordBox');
+    const loginButton = document.querySelector('#loginButton');
+  
+    
+    
+
+    loginForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      signInWithEmailAndPassword(auth, emailBox.value, passwordBox.value)
+        .then(() => {
+
+            
+
+            document.documentElement.innerHTML = `
+          <style>
+            html {
+              overflow: auto;
+            }
+
+            html, body, div, iframe {
+              margin: 0px;
+              padding: 0px;
+              height: 100%;
+              border: none;
+            }
+
+            iframe {
+              display: block;
+              width: 100%;
+              border: none;
+              overflow-y: auto;
+              overflow-x: hidden;
+            }
+
+            .Watermark{
+              position: fixed;
+              right: 5px;
+              bottom: 5px;
+              height: 30px;
+              width: auto;
+              transition: all 0.3s ease-in-out;
+            }
+    
+            .Watermark:hover {
+              transform: scale(1.1);
+            }
+    
+            #left:hover {
+              transform: scale(1.2);
+            }
+    
+            .arrowContainer {
+              display: inline-block;
+              position: fixed;
+              bottom: 5px;
+              left: 5px;
+              background: #0f0f0f;
+              border-radius: 20px;
+              height: auto;
+              padding: 3px;
+              width: max-content;
+            }
+    
+            #left {
+              margin: 5px;
+              transition: all 0.3s ease-in-out;
+              color: white;
+            }
+          </style>
+          <body>
+            <iframe id="MainFrame" width="100%" height="100%" src="https://nzody.herokuapp.com/"allowfullscreen></iframe>
+            <img class="Watermark" src="https://i.postimg.cc/YC47nHQV/2022-12-Free-Games-Header-1-3.png"/>
+            <div class="arrowContainer">
+              <i id="left" onclick="location.href='https://educationbluesky.com/play/roblox-corporation/5349/roblox';" class="fa-solid fa-gamepad"></i>
+            </div>
+          </body>
+        `;
+        
+          // Update last device identifier in user's account data
+          const uid = auth.currentUser.uid;
+          const deviceIdentifier = window.navigator.userAgent;
+          const updates = {};
+          updates[`users/${uid}/lastDeviceIdentifier`] = deviceIdentifier;
+          update(ref(db), updates);
+        })
+              .catch((error) => {
+        let errorMessage = error.message;
+        if (error.code === "auth/user-disabled") {
+          errorMessage = "Your account has been banned. Please feel free to appeal, it appears you have broken our terms of service.";
+        } else if (error.code === "auth/user-not-found") {
+          errorMessage = "There is no user record corresponding to this email. Please check your email address and try again.";
+        } else if (error.code === "auth/wrong-password") {
+          errorMessage = "The password you entered is incorrect. Please try again.";
+        }
+        alert(errorMessage);
+      });
+    });
+
+
+    onAuthStateChanged(auth, (user) => {
+  if (user) {
+
+    if (user.disabled) {
+      alert("Your account has been banned. Please feel free to appeal, it appears you have broken our terms of service.");
+      return;
+    }
+
+    document.documentElement.innerHTML = `
+          <style>
+            html {
+              overflow: auto;
+            }
+
+            html, body, div, iframe {
+              margin: 0px;
+              padding: 0px;
+              height: 100%;
+              border: none;
+            }
+
+            iframe {
+              display: block;
+              width: 100%;
+              border: none;
+              overflow-y: auto;
+              overflow-x: hidden;
+            }
+
+            .Watermark{
+              position: fixed;
+              right: 5px;
+              bottom: 5px;
+              height: 30px;
+              width: auto;
+              transition: all 0.3s ease-in-out;
+            }
+    
+            .Watermark:hover {
+              transform: scale(1.1);
+            }
+    
+            #left:hover {
+              transform: scale(1.2);
+            }
+    
+            .arrowContainer {
+              display: inline-block;
+              position: fixed;
+              bottom: 5px;
+              left: 5px;
+              background: #0f0f0f;
+              border-radius: 20px;
+              height: auto;
+              padding: 3px;
+              width: max-content;
+            }
+    
+            #left {
+              margin: 5px;
+              transition: all 0.3s ease-in-out;
+              color: white;
+            }
+          </style>
+          <body>
+            <iframe id="MainFrame" width="100%" height="100%" src="https://nzody.herokuapp.com/"allowfullscreen></iframe>
+            <img class="Watermark" src="https://i.postimg.cc/YC47nHQV/2022-12-Free-Games-Header-1-3.png"/>
+            <div class="arrowContainer">
+              <i id="left" onclick="location.href='https://educationbluesky.com/play/roblox-corporation/5349/roblox';" class="fa-solid fa-gamepad"></i>
+            </div>
+          </body>
+        `;
+
+    // User is signed in
+    alert("Successfully signed in!");
+
+    // Save the user's login
+    localStorage.setItem("loggedIn", true);
+
+    // Get the user's UID
+    const uid = user.uid;
+
+    // Get the user's ID token
+    user
+      .getIdToken()
+      .then((idToken) => {
+        // Send the ID token to your server to handle the 24 hour counter
+        // Here, we're just logging the ID token for demo purposes
+        console.log(idToken);
+      })
+      .catch((error) => {
+        alert(error);
+      });
+      
+    // Listen for token refresh
+    user.getIdTokenResult().then((idTokenResult) => {
+      // Save the user's token refresh timestamp
+      const lastRefreshTime = idTokenResult.claims.auth_time * 1000;
+      localStorage.setItem("lastRefreshTime", lastRefreshTime);
+    });
+
+  } else {
+    // User is signed out
+    console.log("User is signed out");
+
+    // Clear the user's login
+    localStorage.removeItem("loggedIn");
+    localStorage.removeItem("lastRefreshTime");
+  }
+});
+</script>
+  
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script> 
+
+  <style>
+    @import url('https://fonts.googleapis.com/css?family=Poppins');
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    
+    
+html 
+{
+ overflow: auto;
+}
+body{
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    min-height: 100vh !important;
+    background: url('https://i.postimg.cc/2yKcGvyT/auroral-forest-4k-illustration-h0-2560x1440.jpg') no-repeat;
+    background-size: cover !important;
+    background-position: center !important;
+} 
+html, body, div, iframe 
+{
+ margin: 0px;
+ padding: 0px; 
+ height: 100%; 
+ border: none;
+}
+  iframe{
+   display: block; 
+   width: 100%; 
+   border: none; 
+   overflow-y: auto; 
+   overflow-x: hidden;
+   z-index: 1;
+  }
+    .Watermark{
+    position: fixed;
+    right: 5px;
+    bottom: 5px;
+    height: 30px;
+    width: auto;
+    transition: all 0.3s ease-in-out;
+    }
+    
+    .Watermark:hover {
+    transform: scale(1.1);
+    }
+    
+    #left:hover {
+    transform: scale(1.2);
+    }
+    
+    
+    .arrowContainer {
+    display: inline-block;
+    position: fixed;
+    bottom: 5px;
+    left: 5px;
+    background: #0f0f0f;
+    border-radius: 20px;
+    height: auto;
+    padding: 3px;
+    width: max-content;
+    }
+    
+    #left {
+    margin: 5px;
+    transition: all 0.3s ease-in-out;
+    color: white;
+    }
+
+    .wrapper {
+        position: relative;
+        width: 400px;
+        height: 440px;
+        background: transparent;
+        border: 2px solid rgba(255, 255, 255, .5);
+        border-radius: 20px;
+        backdrop-filter: blur(40px);
+        box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .wrapper .form-box {
+        width: 100%;
+        padding: 40px;
+    }
+
+    .form-box h2 {
+        font-size: 2em;
+        color: #fff;
+        text-align: center;
+    }
+
+    .input-box {
+        position: relative;
+        width: 100%;
+        height: 50px;
+        border-bottom: 2px solid #fff;
+        margin: 30px 0;
+    }
+
+    .input-box label{
+        position: absolute;
+        top: 50%;
+        left: 5px;
+        transform: translateY(-50%);
+        font-size: 1em;
+        color: #fff;
+        font-weight: 500;
+        pointer-events: none;
+        transition:  .5s;
+    }
+
+    .input-box input {
+        width: 100%;
+        height: 100%;
+        background: transparent;
+        border: none;
+        outline: none;
+        font-size:  1em;
+        color: #fff;
+        font-weight: 600;
+        padding: 0 35px 0 5px;
+    }
+
+    .input-box input:focus~label,
+    .input-box input:valid~label {
+        top: -5px;
+    }
+
+
+
+    .input-box .icon {
+        position: absolute;
+        right: 8px;
+        font-size: 1.2em;
+        color: #fff;
+        line-height: 57px;
+
+    }
+
+    .remember-forgot {
+       font-size: .9em;
+       color: #fff;
+       font-weight: 500;
+       margin: -15px 0 15px;
+       display: flex;
+       justify-content: space-between;
+    }
+
+    .remember-forgot label input {
+       accent-color: #fff;
+       margin-right: 3px;
+    }
+
+    .btn {
+        margin-top: 10px;
+        width: 100%;
+        height: 45px;
+        background: #162938;
+        border: none;
+        outline: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1em;
+        color: #fff;
+        font-weight: 500;
+        transition: all .2s ease-in-out; 
+    }
+
+    .btn:hover {
+        transform: scale(1.05); 
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="wrapper">
+    <div class="form-box login">
+        <h2>Login</h2>
+        <form action="#">
+            <div class="input-box">
+                <span class="icon"><ion-icon name="mail-outline"></ion-icon></span>
+                <input id="emailBox" type="email" required>
+                <label>Email</label>
+            </div>
+
+            <div class="input-box">
+                <span class="icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
+                <input id="passwordBox" type="password" required>
+                <label>Password</label>
+            </div>
+            <div class="remember-forgot">
+                <label><input div="checkbox" type="checkbox"> Remember Me</label>
+            </div>
+            <button id="loginButton" type="submit" class="btn">Login</button>
+        </form>
+    </div>
+  </div>
+
+</body>
+</html>
